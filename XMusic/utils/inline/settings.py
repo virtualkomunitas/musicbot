@@ -192,14 +192,14 @@ def auth_users_markup(_, status: Union[bool, str] = None):
 
 def playmode_users_markup(
     _,
-    Direct: Union[bool, str] = None,
+    Inline: Union[bool, str] = None,
     Group: Union[bool, str] = None,
     Playtype: Union[bool, str] = None,
 ):
     buttons = [
         [
             InlineKeyboardButton(
-                text=_["ST_B_19"] if Direct == True else _["ST_B_20"],
+                text=_["ST_B_20"] if Inline == True else _["ST_B_19"],
                 callback_data="MODECHANGE",
             ),
             InlineKeyboardButton(
