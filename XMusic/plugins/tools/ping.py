@@ -35,9 +35,3 @@ async def ping_com(client, message: Message, _):
             MUSIC_BOT_NAME, resp, UP, DISK, CPU, RAM, pytgping
         )
     )
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
