@@ -141,7 +141,7 @@ def cleanmode_settings_markup(
         ],
         [
             InlineKeyboardButton(
-                text=_["ST_B_23"], callback_data="COMMANDANSWER"
+                text=_["ST_B_26"], callback_data="COMMANDANSWER"
             ),
             InlineKeyboardButton(
                 text=_["ST_B_14"] if dels == True else _["ST_B_15"],
@@ -199,15 +199,26 @@ def playmode_users_markup(
     buttons = [
         [
             InlineKeyboardButton(
-                text=_["ST_B_20"] if Inline == True else _["ST_B_19"],
-                callback_data="MODECHANGE",
+                text=_["ST_B_19"], callback_data="SEARCHANSWER"
             ),
             InlineKeyboardButton(
-                text=_["ST_B_21"] if Group == True else _["ST_B_22"],
+                text=_["ST_B_21"] if Inline == True else _["ST_B_20"],
+                callback_data="MODECHANGE",
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text=_["ST_B_22"], callback_data="AUTHANSWER"
+            ),
+            InlineKeyboardButton(
+                text=_["ST_B_16"] if Group == True else _["ST_B_17"],
                 callback_data="CHANNELMODECHANGE",
             ),
         ],
         [
+            InlineKeyboardButton(
+                text=_["ST_B_25"], callback_data="PLAYTYPEANSWER"
+            ),
             InlineKeyboardButton(
                 text=_["ST_B_16"]
                 if Playtype == True
