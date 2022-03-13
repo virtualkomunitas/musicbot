@@ -16,6 +16,7 @@ from config import BANNED_USERS, MUSIC_BOT_NAME
 from strings import get_command, get_string
 from XMusic import YouTube, app
 from XMusic.core.userbot import assistants
+from XMusic.plugins import ALL_MODULES
 from XMusic.misc import SUDOERS, pymongodb
 from XMusic.utils.database import (get_global_tops, get_lang,
                                    get_particulars, get_queries,
@@ -188,6 +189,7 @@ async def overall_stats(client, CallbackQuery, _):
     total_queries = await get_queries()
     blocked = len(BANNED_USERS)
     sudoers = len(SUDOERS)
+    mod = len(ALL_MODULES)
     assistant = len(assistants)
     playlist_limit = config.SERVER_PLAYLIST_LIMIT
     fetch_playlist = config.PLAYLIST_FETCH_LIMIT
@@ -200,6 +202,7 @@ async def overall_stats(client, CallbackQuery, _):
     cm = config.CLEANMODE_DELETE_MINS
     text = f"""**Bot's Stats and Information:**
 
+**Imported Modules:** {mod}
 **Served Chats:** {served_chats} 
 **Served Users:** {served_users} 
 **Blocked Users:** {blocked} 
@@ -503,6 +506,7 @@ async def overall_stats(client, CallbackQuery, _):
     total_queries = await get_queries()
     blocked = len(BANNED_USERS)
     sudoers = len(await get_sudoers())
+    mod = len(ALL_MODULES)
     text = f""" **Bot's Stats and Information:**
 
 **Platform:** {sc}
@@ -519,6 +523,7 @@ async def overall_stats(client, CallbackQuery, _):
 **Storage Used:** {used[:4]} GiB
 **Storage Left:** {free[:4]} GiB
 
+**Imported Modules:** {mod}
 **Served Chats:** {served_chats} 
 **Served Users:** {served_users} 
 **Blocked Users:** {blocked} 
