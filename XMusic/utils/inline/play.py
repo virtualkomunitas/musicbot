@@ -1,6 +1,5 @@
 from pyrogram.types import InlineKeyboardButton
 
-from config import SUPPORT_CHANNEL, SUPPORT_GROUP
 
 def track_markup(_, videoid, user_id, channel, fplay):
     buttons = [
@@ -32,7 +31,7 @@ def stream_markup(_, videoid):
                 callback_data=f"add_playlist {videoid}",
             ),
             InlineKeyboardButton(
-                text=_["S_B_4"], url=f"{SUPPORT_CHANNEL}"
+                text=_["PL_B_3"], switch_inline_query_current_chat=""
             ),
         ],
         [
@@ -48,7 +47,7 @@ def telegram_markup(_):
     buttons = [
         [
             InlineKeyboardButton(
-                text=_["S_B_3"], url=f"{SUPPORT_GROUP}"
+                text=_["PL_B_3"], switch_inline_query_current_chat=""
             ),
             InlineKeyboardButton(
                 text=_["CLOSEMENU_BUTTON"], callback_data="close"
