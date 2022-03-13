@@ -17,17 +17,17 @@
         "required": true
       },
       "AUTO_LEAVING_ASSISTANT": {
-        "description": "Jika Anda ingin asisten Anda meninggalkan semua obrolan secara otomatis setelah beberapa waktu.",
+        "description": "Jika Anda ingin asisten Anda meninggalkan semua obrolan secara otomatis setelah beberapa menit.",
         "value": "True",
         "required": true
       },
       "BOT_TOKEN": {
-        "description": "Token Bot dari Botfather",
+        "description": "Token Bot dari @Botfather",
         "value": "",
         "required": true
       },
       "MONGO_DB_URI": {
-        "description": "Mongo DB URL",
+        "description": "Mongo DB URL, ambil di mongodb.com",
         "value": "",
         "required": true
       },
@@ -37,12 +37,12 @@
         "required": true
       },
       "OWNER_ID": {
-        "description": "ID pengguna dari pengguna yang ingin Anda tambahkan sebagai PEMILIK. Beberapa value harus dipisahkan dengan spasi.",
+        "description": "ID pengguna dari pengguna yang ingin Anda tambahkan sebagai PEMILIK, Ambil Di @MissRose_bot lalu /id.",
         "value": "",
         "required": true
       },
       "STRING_SESSION": {
-        "description": "Sesi String Pyrogram. Satu Asisten adalah Wajib.",
+        "description": "Sesi String Pyrogram, Ambil Di @SharingUserbot Satu Asisten adalah Wajib.",
         "value": "",
         "required": true
       },
@@ -72,7 +72,7 @@
         "required": true
       },
       "UPSTREAM_BRANCH": {
-        "description": "Nama branch repo",
+        "description": "Nama branch repo, isi saja main",
         "value": "main",
         "required": true
       },
