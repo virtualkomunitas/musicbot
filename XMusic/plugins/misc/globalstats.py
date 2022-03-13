@@ -509,6 +509,7 @@ async def overall_stats(client, CallbackQuery, _):
     mod = len(ALL_MODULES)
     text = f""" **Bot's Stats and Information:**
 
+**Imported Modules:** {mod}
 **Platform:** {sc}
 **Ram:** {ram}
 **Physical Cores:** {p_core}
@@ -523,7 +524,6 @@ async def overall_stats(client, CallbackQuery, _):
 **Storage Used:** {used[:4]} GiB
 **Storage Left:** {free[:4]} GiB
 
-**Imported Modules:** {mod}
 **Served Chats:** {served_chats} 
 **Served Users:** {served_users} 
 **Blocked Users:** {blocked} 
