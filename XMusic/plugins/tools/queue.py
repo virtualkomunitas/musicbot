@@ -3,7 +3,8 @@ import os
 from random import randint
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.errors import FloodWait
+from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 
 from config import BANNED_USERS
 from strings import get_command
