@@ -347,7 +347,7 @@ async def play_commnd(
                     chat_id,
                     message.from_user.first_name,
                     message.chat.id,
-                    video=True,
+                    video=video,
                     streamtype="index",
                     forceplay=fplay,
                 )
