@@ -10,7 +10,7 @@ from XMusic.misc import db
 from XMusic.utils.database import get_loop
 from XMusic.utils.decorators import AdminRightsCheck
 from XMusic.utils.inline.play import (stream_markup,
-                                          telegram_markup)
+                                      telegram_markup)
 from XMusic.utils.stream.autoclear import auto_clean
 from XMusic.utils.thumbnails import gen_thumb
 
@@ -154,7 +154,7 @@ async def skip(cli, message: Message, _, chat_id):
         await mystic.delete()
     elif "index_" in queued:
         try:
-            await XMusic.skip_stream(chat_id, videoid, video=True)
+            await XMusic.skip_stream(chat_id, videoid, video=status)
         except Exception:
             return await message.reply_text(_["call_9"])
         button = telegram_markup(_)
