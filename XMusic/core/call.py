@@ -135,6 +135,21 @@ class Call(PyTgCalls):
             stream(link, audio_parameters=audio_stream_quality),
         )
 
+    async def seek_stream(
+        self, chat_id, file_path, to_seek, duration, mode
+    ):
+        stream = AudioVideoPiped if mode == "video" else AudioPiped
+        assistant = await group_assistant(self, chat_id)
+        audio_stream_quality = await get_audio_bitrate(chat_id)
+        await assistant.change_stream(
+            chat_id,
+            stream(
+                file_path,
+                audio_parameters=audio_stream_quality,
+                additional_ffmpeg_parameters=f"-ss {to_seek} -to {duration}",
+            ),
+        )
+
     async def stream_call(self, link):
         assistant = await group_assistant(self, config.LOG_GROUP_ID)
         await assistant.join_group_call(
@@ -211,7 +226,6 @@ class Call(PyTgCalls):
         link,
         video: Union[bool, str] = None,
     ):
-        await mute_off(chat_id)
         assistant = await group_assistant(self, chat_id)
         audio_stream_quality = await get_audio_bitrate(chat_id)
         video_stream_quality = await get_video_bitrate(chat_id)
@@ -245,16 +259,21 @@ class Call(PyTgCalls):
                 )
             except Exception as e:
                 raise AssistantErr(
-                    "**No Active Voice Chat Found**\n\nPlease make sure group's voice chat is enabled. If already enabled, please end it and start fresh voice chat again."
+                    "**No Active Voice Chat Found**\n\nPlease make sure group's voice chat is enabled. If already enabled, please end it and start fresh voice chat again and if the problem continues, try /restart"
                 )
         except AlreadyJoinedError:
             raise AssistantErr(
-                "**Assistant Already in Voice Chat**\n\nSystems have detected that assistant is already there in the voice chat, this issue generally comes when you play 2 queries together.\n\n If assistant is not present in voice chat, please end voice chat and start fresh voice chat again."
+                "**Assistant Already in Voice Chat**\n\nSystems have detected that assistant is already there in the voice chat, this issue generally comes when you play 2 queries together.\n\nIf assistant is not present in voice chat, please end voice chat and start fresh voice chat again and if the  problem continues, try /restart"
             )
         except TelegramServerError:
             raise AssistantErr(
                 "**Telegram Sever Error**\n\nTelegram is having some internal server problems, Please try playing again.\n\n If this problem keeps coming everytime, please end your voice chat and start fresh voice chat again."
             )
+        await add_active_chat(chat_id)
+        await mute_off(chat_id)
+        await music_on(chat_id)
+        if video:
+            await add_active_video_chat(chat_id)
 
     async def change_stream(self, client, chat_id):
         check = db.get(chat_id)
@@ -358,7 +377,7 @@ class Call(PyTgCalls):
             elif "index_" in queued:
                 try:
                     await client.change_stream(
-                        chat_id, AudioVideoPiped(videoid)
+                        chat_id, stream(videoid)
                     )
                 except Exception:
                     return await app.send_message(
@@ -373,11 +392,6 @@ class Call(PyTgCalls):
                     reply_markup=InlineKeyboardMarkup(button),
                 )
             else:
-                stream = (
-                    AudioPiped
-                    if str(streamtype) == "audio"
-                    else AudioVideoPiped
-                )
                 try:
                     await client.change_stream(
                         chat_id, stream(queued)
@@ -422,19 +436,6 @@ class Call(PyTgCalls):
                         reply_markup=InlineKeyboardMarkup(button),
                     )
 
-    async def start(self):
-        LOGGER(__name__).info("Starting PyTgCalls Client\n")
-        if config.STRING1:
-            await self.one.start()
-        if config.STRING2:
-            await self.two.start()
-        if config.STRING3:
-            await self.three.start()
-        if config.STRING4:
-            await self.four.start()
-        if config.STRING5:
-            await self.five.start()
-    
     async def ping(self):
         pings = []
         if config.STRING1:
@@ -448,6 +449,19 @@ class Call(PyTgCalls):
         if config.STRING5:
             pings.append(await self.five.ping)
         return str(round(sum(pings) / len(pings), 3))
+
+    async def start(self):
+        LOGGER(__name__).info("Starting PyTgCalls Client\n")
+        if config.STRING1:
+            await self.one.start()
+        if config.STRING2:
+            await self.two.start()
+        if config.STRING3:
+            await self.three.start()
+        if config.STRING4:
+            await self.four.start()
+        if config.STRING5:
+            await self.five.start()
 
     async def decorators(self):
         @self.one.on_kicked()
