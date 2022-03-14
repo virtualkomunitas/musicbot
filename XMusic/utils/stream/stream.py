@@ -92,8 +92,6 @@ async def stream(
                 await XMusic.join_call(
                     chat_id, original_chat_id, file_path, video=status
                 )
-                await add_active_chat(chat_id)
-                await music_on(chat_id)
                 await put_queue(
                     chat_id,
                     original_chat_id,
@@ -106,8 +104,6 @@ async def stream(
                     "video" if video else "audio",
                     forceplay=forceplay,
                 )
-                if video:
-                    await add_active_video_chat(chat_id)
                 img = await gen_thumb(vidid)
                 button = stream_markup(_, vidid)
                 await app.send_photo(
@@ -175,7 +171,6 @@ async def stream(
             await XMusic.join_call(
                 chat_id, original_chat_id, file_path, video=status
             )
-            await add_active_chat(chat_id)
             await put_queue(
                 chat_id,
                 original_chat_id,
@@ -188,9 +183,6 @@ async def stream(
                 "video" if video else "audio",
                 forceplay=forceplay,
             )
-            if video:
-                await add_active_video_chat(chat_id)
-            await music_on(chat_id)
             img = await gen_thumb(vidid)
             button = stream_markup(_, vidid)
             await app.send_photo(
@@ -202,6 +194,7 @@ async def stream(
                 ),
                 reply_markup=InlineKeyboardMarkup(button),
             )
+
     elif streamtype == "soundcloud":
         file_path = result["filepath"]
         title = result["title"]
@@ -243,10 +236,6 @@ async def stream(
                 "audio",
                 forceplay=forceplay,
             )
-            if video:
-                await add_active_video_chat(chat_id)
-            await music_on(chat_id)
-            await add_active_chat(chat_id)
             button = telegram_markup(_)
             await app.send_photo(
                 original_chat_id,
@@ -287,7 +276,6 @@ async def stream(
             await XMusic.join_call(
                 chat_id, original_chat_id, file_path, video=status
             )
-            await add_active_chat(chat_id)
             await put_queue(
                 chat_id,
                 original_chat_id,
@@ -302,7 +290,6 @@ async def stream(
             )
             if video:
                 await add_active_video_chat(chat_id)
-            await music_on(chat_id)
             button = telegram_markup(_)
             await app.send_photo(
                 original_chat_id,
@@ -348,7 +335,6 @@ async def stream(
             await XMusic.join_call(
                 chat_id, original_chat_id, file_path, video=status
             )
-            await add_active_chat(chat_id)
             await put_queue(
                 chat_id,
                 original_chat_id,
@@ -361,9 +347,6 @@ async def stream(
                 "video" if video else "audio",
                 forceplay=forceplay,
             )
-            if video:
-                await add_active_video_chat(chat_id)
-            await music_on(chat_id)
             img = await gen_thumb(vidid)
             button = telegram_markup(_)
             await app.send_photo(
@@ -388,7 +371,7 @@ async def stream(
                 duration_min,
                 user_name,
                 link,
-                "video",
+                "video" if video else "audio",
             )
             position = len(db.get(chat_id)) - 1
             await mystic.edit_text(
@@ -400,9 +383,8 @@ async def stream(
             if not forceplay:
                 db[chat_id] = []
             await XMusic.join_call(
-                chat_id, original_chat_id, link, video=True
+                chat_id, original_chat_id, link, video=True if video else None
             )
-            await add_active_chat(chat_id)
             await put_queue_index(
                 chat_id,
                 original_chat_id,
@@ -411,11 +393,9 @@ async def stream(
                 duration_min,
                 user_name,
                 link,
-                "video",
+                "video" if video else "audio",
                 forceplay=forceplay,
             )
-            await add_active_video_chat(chat_id)
-            await music_on(chat_id)
             button = telegram_markup(_)
             await app.send_photo(
                 original_chat_id,
