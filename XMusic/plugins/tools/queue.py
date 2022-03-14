@@ -6,13 +6,18 @@ from pyrogram import filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import CallbackQuery, InputMediaPhoto, Message
 
+import config
 from config import BANNED_USERS
 from strings import get_command
 from XMusic import Carbon, app
 from XMusic.misc import db
-from XMusic.utils.database import get_cmode, is_active_chat
-from XMusic.utils.decorators.language import language
-from XMusic.utils.pastebin import Xbin
+from XMusic.utils import (Xbin, get_channeplayCB,
+                          seconds_to_min)
+from XMusic.utils.database import (get_cmode, is_active_chat,
+                                   is_music_playing)
+from XMusic.utils.decorators.language import language, languageCB
+from XMusic.utils.inline import close_markup, queue_markup
+
 
 ###Commands
 QUEUE_COMMAND = get_command("QUEUE_COMMAND")
@@ -93,7 +98,7 @@ async def ping_com(client, message: Message, _):
 🎥**Playing:** {title}
 
 🔗**Stream Type:** {typo}
-🙍‍♂️**Played By:** {user}
+🎧**Played By:** {user}
 {send}"""
     upl = (
         queue_markup(_, DUR, "c" if cplay else "g", videoid)
