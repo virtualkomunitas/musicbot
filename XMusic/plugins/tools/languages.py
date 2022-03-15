@@ -6,12 +6,10 @@ from config import BANNED_USERS
 from strings import get_command, get_string
 from XMusic import app
 from XMusic.utils.database import get_lang, set_lang
-from XMusic.utils.decorators import (ActualAdminCB,
-                                     languageCB,
-                                     language)
+from XMusic.utils.decorators import (ActualAdminCB, language,
+                                     languageCB)
 
 # Languages Available
-
 
 def languages_keyboard(_):
     keyboard = InlineKeyboard(row_width=2)
